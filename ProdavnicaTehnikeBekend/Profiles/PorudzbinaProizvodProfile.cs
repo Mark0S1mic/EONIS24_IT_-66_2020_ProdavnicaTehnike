@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ProdavnicaTehnikeBekend.Models;
 using ProdavnicaTehnikeBekend.Models.DTOs;
 using ProdavnicaTehnikeBekend.Models.DTOs.PorudzbinaProizvodDto;
 

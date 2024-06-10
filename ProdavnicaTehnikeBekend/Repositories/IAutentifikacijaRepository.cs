@@ -8,5 +8,7 @@ namespace ProdavnicaTehnikeBekend.Repositories
     public interface IAutentifikacijaRepository
     {
         Task<object> Authenticate(string username, string password);
+        Task Register(Kupac kupac);
+        Task<bool> UserExists(string username);
     }
 }

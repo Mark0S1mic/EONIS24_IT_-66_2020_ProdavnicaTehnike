@@ -1,4 +1,5 @@
-﻿namespace ProdavnicaTehnikeBekend.Repositories
+﻿using ProdavnicaTehnikeBekend.Models;
+namespace ProdavnicaTehnikeBekend.Repositories
 {
     public interface IZaposleniRepository
     {

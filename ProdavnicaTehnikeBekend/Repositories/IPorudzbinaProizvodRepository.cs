@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ProdavnicaTehnikeBekend.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProdavnicaTehnikeBekend.Repositories

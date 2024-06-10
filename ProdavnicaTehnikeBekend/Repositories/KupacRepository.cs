@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ProdavnicaTehnikeBekend.Models;
 using ProdavnicaTehnikeBekend.Models.DTOs;
 using System;
 using System.Collections.Generic;

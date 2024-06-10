@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using ProdavnicaTehnikeBekend.Models;
 
 namespace ProdavnicaTehnikeBekend.Repositories
 {
@@ -86,7 +87,7 @@ namespace ProdavnicaTehnikeBekend.Repositories
                 var toUpdate = await _dbContext.Proizvods.FirstOrDefaultAsync(p => p.ProizvodId == proizvod.ProizvodId);
 
                 if (toUpdate == null)
-                    throw new KeyNotFoundException();
+                    throw new KeyNotFoundException("Proizvod not found");
 
                 toUpdate.ProizvodId = proizvod.ProizvodId;
                 toUpdate.NazivProizvoda = proizvod.NazivProizvoda;

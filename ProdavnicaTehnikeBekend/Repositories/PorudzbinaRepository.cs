@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using ProdavnicaTehnikeBekend.Models;
 namespace ProdavnicaTehnikeBekend.Repositories
 {
     public class PorudzbinaRepository : IPorudzbinaRepository

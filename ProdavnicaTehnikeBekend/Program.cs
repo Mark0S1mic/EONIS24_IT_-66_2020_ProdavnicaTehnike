@@ -1,17 +1,12 @@
-global using ProdavnicaTehnikeBekend.Models;
-using Microsoft.AspNetCore.Hosting;
-using ProdavnicaTehnikeBekend.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using ProdavnicaTehnikeBekend;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Ubiety.Dns.Core;
+//using ProdavnicaTehnikeBekend.Models;
+using ProdavnicaTehnikeBekend.Repositories;
+using ProdavnicaTehnikeBekend;
 using Swashbuckle.AspNetCore.Filters;
-
+using System.Text;
+using ProdavnicaTehnikeBekend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +14,19 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
     .Build();
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -38,22 +42,17 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 builder.Services.AddDbContext<ProdavnicaTehnikeContext>();
-
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
-
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.AddScoped<IKupacRepository, KupacRepository>();
 builder.Services.AddScoped<IZaposleniRepository, ZaposleniRepository>();
 builder.Services.AddScoped<IProizvodRepository, ProizvodRepository>();
 builder.Services.AddScoped<IPorudzbinaRepository, PorudzbinaRepository>();
 builder.Services.AddScoped<IPorudzbinaProizvodRepository, PorudzbinaProizvodRepository>();
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer("Bearer", x =>
@@ -73,9 +72,6 @@ builder.Services.AddScoped<IAutentifikacijaRepository, AutentifikacijaRepository
 builder.Services.AddSingleton(new JwtHelper(builder.Configuration));
 builder.Services.AddScoped<HashingService>();
 
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -86,9 +82,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll"); // Ensure this is called before UseAuthorization
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

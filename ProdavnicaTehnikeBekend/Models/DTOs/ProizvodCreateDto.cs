@@ -15,7 +15,7 @@
 
         public int Kolicina { get; set; }
 
-        public string StatusProizvoda { get; set; } = null!;
+       // public string StatusProizvoda { get; set; } = null!;
 
 
     }

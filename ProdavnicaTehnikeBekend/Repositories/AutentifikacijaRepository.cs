@@ -52,6 +52,22 @@ namespace ProdavnicaTehnikeBekend.Repositories
             return null;
         }
 
+       public async Task Register(Kupac kupac)
+        {
+            await _dbContext.Kupacs.AddAsync(kupac);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        
+
+        public async Task<bool> UserExists(string username)
+        {
+            return await _dbContext.Kupacs.AnyAsync(u => u.KorisnickoImeKupca == username);
+        }
+
+
+
+
         private string GenerateJwtToken(int id, string role)
         {
             var jwtSettings = _configuration.GetSection("Jwt");

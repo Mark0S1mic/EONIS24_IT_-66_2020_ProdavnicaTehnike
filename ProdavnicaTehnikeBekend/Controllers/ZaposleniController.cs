@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProdavnicaTehnikeBekend.Models;
 using ProdavnicaTehnikeBekend.Models.DTOs;
 using ProdavnicaTehnikeBekend.Repositories;
 

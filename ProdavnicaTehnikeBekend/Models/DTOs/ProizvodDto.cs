@@ -3,7 +3,7 @@
     public class ProizvodDto
     {
 
-      
+        public int ProizvodId { get; set; }
 
         public string NazivProizvoda { get; set; } = null!;
 
