@@ -23,7 +23,7 @@ namespace ProdavnicaTehnikeBekend.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, User")]
+       // [Authorize(Roles = "Admin, User")]
         [HttpGet]
         public async Task<ActionResult<List<PorudzbinaDto>>> GetPorudzbine()
         {

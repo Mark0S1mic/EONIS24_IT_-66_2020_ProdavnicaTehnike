@@ -3,7 +3,7 @@
     public class KupacDto
     {
 
-
+        public int KupacId { get; set; }
         public  string KorisnickoImeKupca { get; set; }
         public  string SifraKupca { get; set; }
         public DateOnly? DatumRodjenjaKupca { get; set; }

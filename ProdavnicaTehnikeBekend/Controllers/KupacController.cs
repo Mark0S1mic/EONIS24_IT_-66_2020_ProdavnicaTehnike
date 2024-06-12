@@ -49,8 +49,9 @@ namespace ProdavnicaTehnikeBekend.Controllers
             }
 
         }
-
-        [Authorize(Roles = "Admin")]
+         
+        // [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [HttpGet("{kupacId}")]
         public async Task<ActionResult<KupacDto>> GetKupacById(int kupacId)
         {
@@ -76,7 +77,8 @@ namespace ProdavnicaTehnikeBekend.Controllers
 
 
 
-        [Authorize(Roles = "Admin, User")]
+        // [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
         [HttpGet("ime/{korisnickoImeKupca}")]
         public async Task<ActionResult<KupacDto>> GetKupacByKorisnickoIme(string korisnickoImeKupca)
         {
@@ -90,7 +92,7 @@ namespace ProdavnicaTehnikeBekend.Controllers
 
                 KupacDto kupacDto = _mapper.Map<KupacDto>(kupac);
 
-                return Ok(kupac);
+                return Ok(kupacDto);
 
             }
             catch (Exception ex)
