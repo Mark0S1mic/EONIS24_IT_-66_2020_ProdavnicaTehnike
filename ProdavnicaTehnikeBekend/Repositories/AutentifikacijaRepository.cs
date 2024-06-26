@@ -35,7 +35,7 @@ namespace ProdavnicaTehnikeBekend.Repositories
                 user.SifraKupca = null;
 
                 var token = GenerateJwtToken(user.KupacId, "User");
-                return new { Token = token, Role = "User" };
+                return new { Token = token, Role = "User", KorisnickoImeKupca = user.KorisnickoImeKupca };
             }
 
             var admin = await _dbContext.Zaposlenis.SingleOrDefaultAsync(x => x.KorisnickoImeZaposlenog == username);

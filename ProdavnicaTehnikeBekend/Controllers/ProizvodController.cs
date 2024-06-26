@@ -99,6 +99,38 @@ namespace ProdavnicaTehnikeBekend.Controllers
         }
 
 
+
+
+        // [Authorize(Roles = "Admin, User")]
+        [AllowAnonymous]
+        [HttpGet("ime/{nazivProizvoda}")]
+        public async Task<ActionResult<ProizvodDto>> GetProizvodByNaziv(string nazivProizvoda)
+        {
+            try
+            {
+                Proizvod proizvod = await _proizvodRepository.GetProizvodByNaziv(nazivProizvoda);
+
+                if (proizvod == null)
+
+                    return NotFound();
+
+                ProizvodDto proizvodDto = _mapper.Map<ProizvodDto>(proizvod);
+
+                return Ok(proizvodDto);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+
+
+
+
+
+
         [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<ActionResult<ProizvodDto>> UpdateProizvod(ProizvodUpdateDto proizvod)

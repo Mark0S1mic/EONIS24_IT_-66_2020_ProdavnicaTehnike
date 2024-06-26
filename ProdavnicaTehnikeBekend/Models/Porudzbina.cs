@@ -9,11 +9,14 @@ public partial class Porudzbina
 
     public DateOnly DatumPorudzbine { get; set; }
 
-    public string AdresaPorudzbine { get; set; }
+    public string? AdresaPorudzbine { get; set; }
 
     public DateOnly DatumPlacanja { get; set; }
+    public int KupacId { get; set; }
 
-    public virtual ICollection<Kupac> Kupacs { get; set; } = new List<Kupac>();
+    public virtual Kupac Kupac { get; set; }
+  //  public virtual ICollection<Kupac> Kupacs { get; set; } = new List<Kupac>();
+    public virtual ICollection<Zaposleni> Zaposlenis { get; set; } = new List<Zaposleni>(); // Dodajte ovu liniju
+    public virtual ICollection<PorudzbinaProizvod> PorudzbinaProizvods { get; set; } = new List<PorudzbinaProizvod>();
 
-    public virtual ICollection<Zaposleni> Zaposlenis { get; set; } = new List<Zaposleni>();
 }

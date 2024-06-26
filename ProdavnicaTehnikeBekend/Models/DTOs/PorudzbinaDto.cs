@@ -11,9 +11,12 @@
 
         public DateOnly DatumPlacanja { get; set; }
 
-        public virtual ICollection<Kupac> Kupacs { get; set; } = new List<Kupac>();
+        public int KupacId { get; set; }
 
-        public virtual ICollection<Zaposleni> Zaposlenis { get; set; } = new List<Zaposleni>();
+        public virtual Kupac Kupac { get; set; }
+        //  public virtual ICollection<Kupac> Kupacs { get; set; } = new List<Kupac>();
+        public virtual ICollection<Zaposleni> Zaposlenis { get; set; } = new List<Zaposleni>(); // Dodajte ovu liniju
+        public virtual ICollection<PorudzbinaProizvod> PorudzbinaProizvods { get; set; } = new List<PorudzbinaProizvod>();
 
 
     }

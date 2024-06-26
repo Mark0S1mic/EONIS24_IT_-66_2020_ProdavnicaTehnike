@@ -49,6 +49,27 @@ namespace ProdavnicaTehnikeBekend.Repositories
 
 
 
+        public async Task<Proizvod> GetProizvodByNaziv(string nazivProizvoda)
+        {
+            try
+            {
+                Proizvod? search = await _dbContext.Proizvods.FirstOrDefaultAsync(p => p.NazivProizvoda == nazivProizvoda);
+                if (search == null)
+                    throw new KeyNotFoundException();
+
+                return search;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+
+
+
+
         public  async Task<Proizvod> CreateProizvod(Proizvod proizvod)
         {
             var createdProizvod = await _dbContext.AddAsync(proizvod);

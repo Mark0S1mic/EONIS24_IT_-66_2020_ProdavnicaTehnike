@@ -21,7 +21,5 @@ public partial class Kupac
 
     public string BrojTelefonaKupca { get; set; }
 
-    public int? PorudzbinaId { get; set; }
-
-    public virtual Porudzbina Porudzbina { get; set; }
+    public virtual ICollection<Porudzbina> Porudzbinas { get; set; } = new List<Porudzbina>();
 }

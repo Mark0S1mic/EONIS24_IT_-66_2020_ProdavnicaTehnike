@@ -11,9 +11,7 @@
         public string GradKupca { get; set; }
         public string KontaktKupca { get; set; }
         public string BrojTelefonaKupca { get; set; }
-        public int? PorudzbinaId { get; set; }
-
-        public virtual Porudzbina? Porudzbina { get; set; }
+      
 
     }
 }

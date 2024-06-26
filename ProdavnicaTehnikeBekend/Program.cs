@@ -7,6 +7,8 @@ using ProdavnicaTehnikeBekend;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using ProdavnicaTehnikeBekend.Models;
+using System.Configuration;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,10 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
     .Build();
+
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -72,6 +78,8 @@ builder.Services.AddScoped<IAutentifikacijaRepository, AutentifikacijaRepository
 builder.Services.AddSingleton(new JwtHelper(builder.Configuration));
 builder.Services.AddScoped<HashingService>();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,6 +89,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll"); // Ensure this is called before UseAuthorization
 app.UseAuthorization();

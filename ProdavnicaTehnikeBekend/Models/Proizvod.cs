@@ -18,4 +18,6 @@ public partial class Proizvod
     public int Kolicina { get; set; }
 
     public string StatusProizvoda { get; set; }
+
+
 }

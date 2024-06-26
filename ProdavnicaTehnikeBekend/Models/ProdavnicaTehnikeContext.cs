@@ -54,15 +54,13 @@ public partial class ProdavnicaTehnikeContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("korisnickoImeKupca");
-            entity.Property(e => e.PorudzbinaId).HasColumnName("porudzbinaID");
+          
             entity.Property(e => e.SifraKupca)
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("sifraKupca");
 
-            entity.HasOne(d => d.Porudzbina).WithMany(p => p.Kupacs)
-                .HasForeignKey(d => d.PorudzbinaId)
-                .HasConstraintName("FK_Kupac_Porudzbina");
+          
         });
 
         modelBuilder.Entity<Porudzbina>(entity =>
@@ -76,24 +74,47 @@ public partial class ProdavnicaTehnikeContext : DbContext
                 .HasColumnName("adresaPorudzbine");
             entity.Property(e => e.DatumPlacanja).HasColumnName("datumPlacanja");
             entity.Property(e => e.DatumPorudzbine).HasColumnName("datumPorudzbine");
+
+            entity.HasOne(d => d.Kupac)
+                  .WithMany(p => p.Porudzbinas)
+                  .HasForeignKey(d => d.KupacId)
+                  .HasConstraintName("FK_Porudzbina_Kupac");
+
+            
+           entity.HasMany(p => p.PorudzbinaProizvods)
+           .WithOne(pp => pp.Porudzbina)
+           .HasForeignKey(pp => pp.PorudzbinaId);
+
+
         });
 
         modelBuilder.Entity<PorudzbinaProizvod>(entity =>
         {
-            entity
-                .HasNoKey()
+            modelBuilder.Entity<PorudzbinaProizvod>()
+        .HasKey(pp => pp.PorudzbinaProizvodId);
+
+            modelBuilder.Entity<PorudzbinaProizvod>()
                 .ToTable("PorudzbinaProizvod", "ProdavnicaTehnike");
 
-            entity.Property(e => e.PorudzbinaId).HasColumnName("porudzbinaID");
-            entity.Property(e => e.ProizvodId).HasColumnName("proizvodID");
+            modelBuilder.Entity<PorudzbinaProizvod>()
+                .Property(e => e.PorudzbinaId)
+                .HasColumnName("porudzbinaID");
 
-            entity.HasOne(d => d.Porudzbina).WithMany()
-                .HasForeignKey(d => d.PorudzbinaId)
+            modelBuilder.Entity<PorudzbinaProizvod>()
+                .Property(e => e.ProizvodId)
+                .HasColumnName("proizvodID");
+
+            modelBuilder.Entity<PorudzbinaProizvod>()
+                .HasOne(pp => pp.Porudzbina)
+                .WithMany(p => p.PorudzbinaProizvods)
+                .HasForeignKey(pp => pp.PorudzbinaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PorudzbinaProizvod_Porudzbina");
 
-            entity.HasOne(d => d.Proizvod).WithMany()
-                .HasForeignKey(d => d.ProizvodId)
+            modelBuilder.Entity<PorudzbinaProizvod>()
+                .HasOne(pp => pp.Proizvod)
+                .WithMany()
+                .HasForeignKey(pp => pp.ProizvodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PorudzbinaProizvod_Proizvod");
         });
@@ -145,10 +166,18 @@ public partial class ProdavnicaTehnikeContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("sifraZaposlenog");
 
-            entity.HasOne(d => d.Porudzbina).WithMany(p => p.Zaposlenis)
-                .HasForeignKey(d => d.PorudzbinaId)
-                .HasConstraintName("FK_Zaposleni_Porudzbina");
+            entity.Property(e => e.PorudzbinaId).HasColumnName("porudzbinaID");
+
+           
+
+           
+            entity.HasOne(z => z.Porudzbina)
+            .WithMany(p => p.Zaposlenis)
+            .HasForeignKey(z => z.PorudzbinaId)
+            .HasConstraintName("FK_Zaposleni_Porudzbina");
         });
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }

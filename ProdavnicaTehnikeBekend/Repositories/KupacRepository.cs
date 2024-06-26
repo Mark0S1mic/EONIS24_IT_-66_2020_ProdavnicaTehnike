@@ -101,7 +101,7 @@ namespace ProdavnicaTehnikeBekend.Repositories
                 toUpdate.AdresaKupca = kupac.AdresaKupca;
                 toUpdate.DatumRodjenjaKupca = kupac.DatumRodjenjaKupca;
                 toUpdate.BrojTelefonaKupca = kupac.BrojTelefonaKupca;
-                toUpdate.PorudzbinaId = kupac.PorudzbinaId;
+                toUpdate.Porudzbinas = kupac.Porudzbinas;
 
                 await _dbContext.SaveChangesAsync();
 

@@ -18,7 +18,7 @@ namespace ProdavnicaTehnikeBekend.Repositories
             try
             {
                 return await _dbContext.Porudzbinas
-             .Include(p => p.Kupacs)
+             .Include(p => p.Kupac)
              .Include(p => p.Zaposlenis)
              .ToListAsync();
 
@@ -34,21 +34,23 @@ namespace ProdavnicaTehnikeBekend.Repositories
         {
             try
             {
-                Porudzbina? search = await _dbContext.Porudzbinas.Include(s => s.Kupacs).Include(p => p.Zaposlenis).
-                    FirstOrDefaultAsync(w => w.PorudzbinaId == porudzbinaId);
+                Porudzbina porudzbina = await _dbContext.Porudzbinas
+                    .Include(p => p.Kupac) // Uključujemo podatke o kupcu
+                    .Include(p => p.Zaposlenis) // Uključujemo podatke o zaposlenima
+                    .FirstOrDefaultAsync(p => p.PorudzbinaId == porudzbinaId);
 
-                if (search == null)
-                    throw new KeyNotFoundException();
+                if (porudzbina == null)
+                {
+                    throw new KeyNotFoundException($"Porudžbina sa ID-jem {porudzbinaId} nije pronađena.");
+                }
 
-                return search;
-
+                return porudzbina;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new Exception($"Greška prilikom dohvatanja porudžbine sa ID-jem {porudzbinaId}: {ex.Message}", ex);
             }
         }
-
         public async Task<Porudzbina> CreatePorudzbina(Porudzbina porudzbina)
         {
             var createdPorudzbina = await _dbContext.AddAsync(porudzbina);
@@ -71,8 +73,7 @@ namespace ProdavnicaTehnikeBekend.Repositories
                 toUpdate.DatumPorudzbine = porudzbina.DatumPorudzbine;
                 toUpdate.AdresaPorudzbine = porudzbina.AdresaPorudzbine;
                 toUpdate.DatumPlacanja = porudzbina.DatumPlacanja;
-                toUpdate.Kupacs = porudzbina.Kupacs;
-                toUpdate.Zaposlenis = porudzbina.Zaposlenis;
+                toUpdate.KupacId = porudzbina.KupacId;
 
 
                 await _dbContext.SaveChangesAsync();
